@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
+import 'dart:io';
+import 'package:meta/meta.dart';
 
 extension Log on Object {
   void log() {
@@ -7,23 +11,42 @@ extension Log on Object {
   }
 }
 
-mixin CanRun {
-  int get speed;
-  void run() {
-    'Running at the speed of $speed'.log();
-  }
+extension GetOnUri on Object {
+  Future<HttpClientResponse> getUrl(
+    String url,
+  ) =>
+      HttpClient()
+          .getUrl(
+            Uri.parse(url),
+          )
+          .then(
+            (req) => req.close(),
+          );
 }
 
-class Cat with CanRun {
+mixin CanMakeGetCall {
+  String get url;
+  @useResult
+  Future<String> getString() => getUrl(url).then((
+        resp,
+      ) =>
+          resp
+              .transform(
+                utf8.decoder,
+              )
+              .join());
+}
+
+@immutable
+class GetPeople with CanMakeGetCall {
+  const GetPeople();
   @override
-  int speed = 10;
+  String get url => 'http://192.168.1.10:5500/apis/people.json';
 }
 
-void testIt() {
-  final cat = Cat();
-  cat.run();
-  cat.speed = 20;
-  cat.run();
+void test() async {
+  final people = await const GetPeople().getString();
+  people.log();
 }
 
 void main() {
@@ -36,7 +59,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    testIt();
+    test();
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Celestial",
+        "type": "spell",
+        "rarity": "common",
+        "text": "Choose a creature. Until the end of your next turn, whenever that creature deals damage to a player, it deals that much damage to the other player instead."
+    },
+    {
+        "name": "Ethereal",
+        "type": "spell",
+        "rarity": "common",
+        "text": "Choose a creature. Until the end of your next turn, whenever that creature deals damage to a player, it deals that much damage to the other player instead."
+    },
+    {
+        "name": "Fey",
+        "type": "spell",
+        "rarity": "common",
+        "text": "Choose a creature. Until the end of your next turn, whenever that creature deals damage to a player, it deals that much damage to the other player instead."
+
+    }
+]
